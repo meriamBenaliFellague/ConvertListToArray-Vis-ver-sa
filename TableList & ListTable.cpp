@@ -1,5 +1,6 @@
 #include<stdio.h>
 #include<stdlib.h>
+
 int ReadInput();
 void AddNode(int);
 int *ListTable();
@@ -8,7 +9,9 @@ void displayList();
 struct node{
 	int data;
 	struct node *next;
-};struct node *head=NULL,*p;int t[5];
+};
+struct node *head=NULL,*p;int t[5];
+
 void TableList(int *s,node*head);
 
 int main(){
@@ -19,22 +22,21 @@ int main(){
 	scanf("%d",&n);
 	if(n==1){
 		for(int j=0;j<5;j++){
-	  int input=ReadInput();
-	  AddNode(input);
-	}
-	int *a=ListTable();
-	for(int i=0;i<5;i++){
-		printf("%d",a[i]);
-	}
+	            int input=ReadInput();
+	            AddNode(input);
+	        }
+	        int *a=ListTable();
+	        for(int i=0;i<5;i++){
+		    printf("%d",a[i]);
+	        }
 	}else{
 		int k[5];
 		for(int i=0;i<5;i++){
-			k[i]=ReadInput();
+		     k[i]=ReadInput();
 		}
 	   TableList(k,head);
 	   displayList();
 	}
-	
 }
 
 int ReadInput()
@@ -52,13 +54,12 @@ void AddNode(int y)
   {
     p->next=NULL;
     head=p;
-  }else
-  {
+  }else{
     while(q->next!=NULL){
     	q=q->next;
-	}
-	q->next=p;
-	p->next=NULL;
+    }
+    q->next=p;
+    p->next=NULL;
   }
 }
 

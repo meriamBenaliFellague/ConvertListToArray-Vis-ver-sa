@@ -1,18 +1,16 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-int ReadInput();
-void AddNode(int);
-int *ListTable();
-void displayList();
-
-struct node{
+typedef struct node{
 	int data;
 	struct node *next;
-};
-struct node *head=NULL,*p;int t[5];
+}node;
 
-void TableList(int *s,node*head);
+int ReadInput();
+void AddNode(node**,int);
+int* ListTable(node*,int);
+void displayList(node*);
+node* TableList(int*,int);
 
 int main(){
 	int n;
@@ -21,21 +19,26 @@ int main(){
 	printf("enter 1 or 2: ");
 	scanf("%d",&n);
 	if(n==1){
-		for(int j=0;j<5;j++){
+		node *head=NULL;
+		printf("enter the nodes number ");
+		int N=ReadInput(); int j;
+		for( j=0;j<N;j++){
 	            int input=ReadInput();
-	            AddNode(input);
+	            AddNode(&head,input);
 	        }
-	        int *a=ListTable();
-	        for(int i=0;i<5;i++){
+	        int*a=ListTable(head,N);int i;
+	        for( i=0;i<N;i++){
 		    printf("%d",a[i]);
 	        }
 	}else{
-		int k[5];
-		for(int i=0;i<5;i++){
+		printf("enter the number of elements ");
+		int N=ReadInput();
+		int k[N],i;
+		for( i=0;i<N;i++){
 		     k[i]=ReadInput();
 		}
-	   TableList(k,head);
-	   displayList();
+	  node *head=TableList(k,N);
+		displayList(head);
 	}
 }
 
@@ -46,15 +49,16 @@ int ReadInput()
   return x;
 }
 
-void AddNode(int y)
-{struct node *q=head;
-  p=(struct node*)malloc(sizeof(struct node));
+void AddNode(node **head,int y)
+{
+  node *p=(node*)malloc(sizeof(node));
   p->data=y;
-  if(head==NULL)
+  if(*head==NULL)
   {
     p->next=NULL;
-    head=p;
+    *head=p;
   }else{
+		node *q=*head;
     while(q->next!=NULL){
     	q=q->next;
     }
@@ -63,8 +67,9 @@ void AddNode(int y)
   }
 }
 
-int *ListTable(){
-	p=head;int i=0;
+int* ListTable(node *head,int num){
+	node *p=head;int i=0;
+  int *t=(int*)malloc(sizeof(int)*num);
 	while(p!=NULL){
 		t[i]=p->data;
 		p=p->next;
@@ -73,13 +78,15 @@ int *ListTable(){
 	return(t);
 }
 
-void TableList(int *s,node *head){
-	for(int i=0;i<5;i++){
-		AddNode(s[i]);
+node* TableList(int *s,int num){
+    node *head=NULL; int i;
+	for(i=0;i<num;i++){
+		AddNode(&head,s[i]);
 	}
+	return head;
 }
-void displayList(){
-	p=head;
+void displayList(node *head){
+	node *p=head;
 	while(p!=NULL){
 		printf("%d",p->data);
 		p=p->next;
